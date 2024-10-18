@@ -18,11 +18,11 @@ database.connect();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Embed static file
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 
 // Template engine
 app.set("view engine", "pug");
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 
 // Flash
 app.use(cookieParser("NGUYENTIENNGOC"));
