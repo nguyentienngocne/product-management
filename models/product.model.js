@@ -22,13 +22,6 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-productSchema.pre("save", async function (next) {
-  if (this.isModified("title")) {
-    this.slug = await slugify(this.title, { lower: true });
-  }
-  next();
-});
-
 const Product = mongoose.model("Product", productSchema, "products");
 
 module.exports = Product;
