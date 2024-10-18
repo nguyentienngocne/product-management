@@ -138,5 +138,66 @@ module.exports.createPost = async (req, res) => {
   }
   const newProduct = new Product(req.body);
   await newProduct.save();
+  req.flash("success", "Tạo mới sản phẩm thành công.");
   res.redirect(`${config.prefixAdmin}/products`);
+};
+
+// [GET] admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = {
+      _id: id,
+      deleted: false,
+    };
+    const product = await Product.findOne(find);
+
+    res.render("admin/pages/product/edit", {
+      pageTitle: "Chỉnh sửa sản phẩm",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${config.prefixAdmin}/products`);
+  }
+};
+
+// [Patch] admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+  try {
+    await Product.updateOne(
+      {
+        _id: req.params.id,
+      },
+      req.body
+    );
+    req.flash("success", "Cập nhật sản phẩm thành công.");
+  } catch (error) {
+    req.flash("error", "Cập nhật sản phẩm thất bại.");
+  }
+  res.redirect(`${config.prefixAdmin}/products`);
+};
+
+// [GET] admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = {
+      deleted: false,
+      _id: id,
+    };
+    const product = await Product.findOne(find);
+    res.render("admin/pages/product/detail", {
+      pagetitle: "Chi tiết sản phẩm",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${config.prefixAdmin}/products`);
+  }
 };

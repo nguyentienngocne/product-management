@@ -2,14 +2,9 @@ extends ../../layouts/default.pug
 include ../../mixins/filler-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
 block main
-  - if (messages.success)
-      .message.info
-        div(
-          class="alert alert-success"
-          show-alert
-          data-time="5000"
-        ) #{messages.success} <span close-alert>x</span>
+  +alertSuccess("5000")
   h1 Trang danh sách sản phẩm
 
   .card.mb-3 
@@ -112,7 +107,14 @@ block main
                     button-change-status
                     ) Dừng hoạt động
               td 
-                button(class="btn btn-warning btn-sm") Sửa
+                a(
+                  href=`${prefixAdmin}/products/detail/${item.id}`
+                  class="btn btn-sm ml-1 btn-secondary"
+                ) Chi tiết
+                a(
+                  href=`${prefixAdmin}/products/edit/${item.id}`
+                  class="btn btn-warning btn-sm"
+                  ) Sửa
                 button(
                   class="btn btn-danger btn-sm ml-1"
                   data-id=item.id 

@@ -18,3 +18,21 @@ module.exports.index = async (req, res) => {
     products: newProducts,
   });
 };
+
+module.exports.detail = async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const find = {
+      deleted: false,
+      slug: slug,
+      status: "active",
+    };
+    const product = await Product.findOne(find);
+    res.render("client/pages/products/detail", {
+      product: product,
+      pageTitle: "Chi tiết sản phẩm",
+    });
+  } catch (error) {
+    res.redirect("/products");
+  }
+};
