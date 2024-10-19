@@ -6,7 +6,6 @@ if (statusButtons.length > 0) {
   statusButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status");
-      console.log(status);
       if (status) {
         url.searchParams.set("status", status);
         url.searchParams.set("page", "1");

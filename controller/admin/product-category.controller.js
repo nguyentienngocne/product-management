@@ -7,6 +7,18 @@ module.exports.index = async (req, res) => {
   let find = {
     deleted: false,
   };
+
+  // Filler status
+  if (req.query.status) {
+    find.status = req.query.status;
+  }
+
+  // Search
+  if (req.query.keyword) {
+    let regex = new RegExp(req.query.keyword, "i");
+    find.title = regex;
+  }
+
   const records = await ProductCategory.find(find);
   res.render("admin/pages/product-category/index", {
     pageTitle: "Danh mục sản phẩm",
@@ -27,8 +39,6 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-
-  console.log(req.body);
 
   const record = new ProductCategory(req.body);
   await record.save();
