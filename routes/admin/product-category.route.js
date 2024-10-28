@@ -19,4 +19,19 @@ router.post(
   controller.createPost
 );
 
+router.post("/change-status/:status/:id", controller.changeStatus);
+
+router.post("/delete/:id", controller.delete);
+
+router.get("/edit/:id", controller.edit);
+
+router.patch(
+  "/edit/:id",
+  upload.single("thumbnail"),
+  validate.createPost,
+  controller.editPatch
+);
+
+router.get("/detail/:id", controller.detail);
+
 module.exports = router;

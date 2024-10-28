@@ -44,3 +44,37 @@ if (searchForm) {
   });
 }
 // End Form search
+
+// Change Status
+const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
+if (buttonChangeStatus.length > 0) {
+  const formStatus = document.querySelector("#form-status");
+  buttonChangeStatus.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const currentStatus = button.getAttribute("data-status");
+      const changeStatus = currentStatus == "active" ? "inactive" : "active";
+      const path = formStatus.getAttribute("path");
+      const action = `${path}/${changeStatus}/${id}`;
+      formStatus.action = action;
+      formStatus.submit();
+    });
+  });
+}
+// End Change Status
+
+// Delete Item
+const deleteButton = document.querySelectorAll("button[button-delete]");
+if (deleteButton.length > 0) {
+  const formDelete = document.querySelector("#form-delete-item");
+  deleteButton.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const path = formDelete.getAttribute("data-path");
+      const action = `${path}/${id}`;
+      formDelete.action = action;
+      formDelete.submit();
+    });
+  });
+}
+// End Delete Item
