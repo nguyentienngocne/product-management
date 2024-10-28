@@ -71,17 +71,22 @@ module.exports.delete = async (req, res) => {
 };
 
 module.exports.edit = async (req, res) => {
-  const id = req.params.id;
-  const find = {
-    _id: id,
-    deleted: false,
-  };
-  const record = await ProductCategory.findOne(find);
-  const records = await ProductCategory.find({ deleted: false });
-  res.render("admin/pages/product-category/edit", {
-    record: record,
-    records: records,
-  });
+  try {
+    const id = req.params.id;
+    const find = {
+      _id: id,
+      deleted: false,
+    };
+    const record = await ProductCategory.findOne(find);
+    const records = await ProductCategory.find({ deleted: false });
+    const newRecords = createTreeHelper.tree(records);
+    res.render("admin/pages/product-category/edit", {
+      record: record,
+      records: records,
+    });
+  } catch (error) {
+    res.redirect(`${config.prefixAdmin}/products-category`);
+  }
 };
 
 module.exports.editPatch = async (req, res) => {
