@@ -92,11 +92,10 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
   req.body.position = parseInt(req.body.position);
-  if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
   console.log(req.body);
+
   await ProductCategory.updateOne({ _id: id }, req.body);
+
   res.redirect(`${config.prefixAdmin}/products-category`);
 };
 
