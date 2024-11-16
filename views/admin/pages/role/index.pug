@@ -1,7 +1,8 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/alert.pug
 block main 
   h1(class="mb-4") Nhóm quyền 
+  +alertSuccess("5000")
   
   .card.mb-3 
     .card-header Danh sách 
@@ -39,11 +40,19 @@ block main
                     class="btn btn-warning btn-sm ml-1"
                     href=`${prefixAdmin}/roles/edit/${item.id}`
                   ) Sửa
-                  a(
+                  button(
                     class="btn btn-danger btn-sm"
-                    href=`${prefixAdmin}/roles/delete/${item.id}`
+                    data-id=item.id
+                    delete-button
                   ) Xóa
           
           else 
             tr 
               td(colspan="4" class="text-center") Chưa có nhóm quyền nào được tạo
+  form(
+    id="form-delete-role"
+    action= ""
+    method="POST"
+    data-path = `${prefixAdmin}/roles/delete`
+  )
+  script(src="/admin/js/role.js")

@@ -55,3 +55,21 @@ if (dataRecords) {
   });
 }
 // End Permissions Data Default
+
+// Delete Role
+const buttonsDelete = document.querySelectorAll("button[delete-button]");
+if (buttonsDelete.length > 0) {
+  const formDeleteRole = document.getElementById("form-delete-role");
+  const path = formDeleteRole.getAttribute("data-path");
+  buttonsDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const isDelete = confirm("Bạn thực sự muốn xóa sản phẩm này?");
+      if (isDelete) {
+        const id = button.getAttribute("data-id");
+        formDeleteRole.action = `${path}/${id}?_method=DELETE`;
+        formDeleteRole.submit();
+      }
+    });
+  });
+}
+// End Delete Role
