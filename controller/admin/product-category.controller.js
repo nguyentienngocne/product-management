@@ -92,7 +92,6 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
   req.body.position = parseInt(req.body.position);
-  console.log(req.body);
 
   await ProductCategory.updateOne({ _id: id }, req.body);
 
