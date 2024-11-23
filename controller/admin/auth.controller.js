@@ -38,3 +38,8 @@ module.exports.loginPost = async (req, res) => {
     }
   });
 };
+
+module.exports.logout = (req, res) => {
+  res.clearCookie("token");
+  res.redirect(`${config.prefixAdmin}/auth/login`);
+};
