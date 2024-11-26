@@ -2,12 +2,18 @@ const Account = require("../../models/account.model");
 const config = require("../../config/system");
 const bcrypt = require("bcrypt");
 
-module.exports.login = (req, res) => {
-  res.render("admin/pages/auth/login", {
-    pageTitle: "Trang đăng nhập",
-  });
+// [GET] /admin/auth/login
+module.exports.login = async (req, res) => {
+  if (req.cookies.token) {
+    res.redirect(`${config.prefixAdmin}/dashboard`);
+  } else {
+    res.render("admin/pages/auth/login", {
+      pageTitle: "Trang đăng nhập",
+    });
+  }
 };
 
+// [Post] /admin/auth/login
 module.exports.loginPost = async (req, res) => {
   const email = req.body.email;
   const user = await Account.findOne({ email: email, deleted: false });
@@ -39,6 +45,7 @@ module.exports.loginPost = async (req, res) => {
   });
 };
 
+// [GET] /admin/auth/logout
 module.exports.logout = (req, res) => {
   res.clearCookie("token");
   res.redirect(`${config.prefixAdmin}/auth/login`);
