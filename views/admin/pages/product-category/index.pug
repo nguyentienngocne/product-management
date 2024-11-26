@@ -1,78 +1,80 @@
 extends ../../layouts/default.pug
 include ../../mixins/table-tree.pug
 block main
-  h1 Danh mục sản phẩm
+  if(role.permissions.includes("products-category_view"))
+    h1 Danh mục sản phẩm
 
-  .card.mb-3 
-    .card-header Bộ lọc và tìm kiếm
-    .card-body 
-      .row 
-        .col-6 
-          button(
-            class=("btn btn-sm ml-1 btn-outline-success")
-            status-button=""
-          ) Tất cả
-          button(
-            class=("btn btn-sm ml-1 btn-outline-success")
-            status-button="active"
-          ) Hoạt động
-          button(
-            class=("btn btn-sm ml-1 btn-outline-success")
-            status-button="inactive"
-          ) Dừng hoạt động
-        .col-6 
-          form(id="form-search")
-            div(class="input-group")
-              input(
-                class="form-control"
-                type="text"
-                placeholder="Nhập từ khóa"
-                name="keyword"
+    .card.mb-3 
+      .card-header Bộ lọc và tìm kiếm
+      .card-body 
+        .row 
+          .col-6 
+            button(
+              class=("btn btn-sm ml-1 btn-outline-success")
+              status-button=""
+            ) Tất cả
+            button(
+              class=("btn btn-sm ml-1 btn-outline-success")
+              status-button="active"
+            ) Hoạt động
+            button(
+              class=("btn btn-sm ml-1 btn-outline-success")
+              status-button="inactive"
+            ) Dừng hoạt động
+          .col-6 
+            form(id="form-search")
+              div(class="input-group")
+                input(
+                  class="form-control"
+                  type="text"
+                  placeholder="Nhập từ khóa"
+                  name="keyword"
+                )
+                div(class='input-group-append')
+                  button(
+                    class="btn btn-success"
+                    type="submit"
+                  ) Tim
+      .card-header Danh sách
+      .card-body 
+        .row
+          .col-8  
+          .col-4
+            if(role.permissions.includes("products-category_create"))
+              a(
+                href=`${prefixAdmin}/products-category/create`
+                class="btn btn-outline-success"
+              ) + Thêm mới
+          table(
+                class="table table-hover table-sm"
+                checkbox-multi
               )
-              div(class='input-group-append')
-                button(
-                  class="btn btn-success"
-                  type="submit"
-                ) Tim
-    .card-header Danh sách
-    .card-body 
-      .row
-        .col-8  
-        .col-4 
-          a(
-            href=`${prefixAdmin}/products-category/create`
-            class="btn btn-outline-success"
-          ) + Thêm mới
-        table(
-              class="table table-hover table-sm"
-              checkbox-multi
-            )
-              thead
-                tr
-                  th
-                    input(type="checkbox" name="checkall")
-                  th STT 
-                  th Hình ảnh
-                  th Tiêu đề
-                  th Vị trí
-                  th Trạng thái 
-                  th Hành động
-              tbody
-                +table-tree(records)
+                thead
+                  tr
+                    th
+                      input(type="checkbox" name="checkall")
+                    th STT 
+                    th Hình ảnh
+                    th Tiêu đề
+                    th Vị trí
+                    th Trạng thái 
+                    th Hành động
+                tbody
+                  +table-tree(records)
 
 
-  form(
-    id="form-status"
-    action=""
-    method="POST"
-    path=`${prefixAdmin}/products-category/change-status`
-  )
-
-  form(
-    action=""
-    id="form-delete-item"
-    method="POST"
-    data-path=`${prefixAdmin}/products-category/delete`
+    form(
+      id="form-status"
+      action=""
+      method="POST"
+      path=`${prefixAdmin}/products-category/change-status`
     )
 
-  script(src="/admin/js/product-category.js")
+    form(
+      action=""
+      id="form-delete-item"
+      method="POST"
+      data-path=`${prefixAdmin}/products-category/delete`
+      )
+
+    script(src="/admin/js/product-category.js")
