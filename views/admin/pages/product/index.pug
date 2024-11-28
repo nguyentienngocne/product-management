@@ -3,6 +3,7 @@ include ../../mixins/filler-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
+include ../../mixins/moment.pug
 block main
   if(role.permissions.includes("products_view"))
     +alertSuccess("5000")
@@ -86,7 +87,8 @@ block main
               th Tiêu đề
               th Giá
               th Vị trí
-              th Trạng thái 
+              th Trạng thái
+              th Người tạo
               th Hành động
           tbody
             each item,index in products
@@ -133,6 +135,10 @@ block main
                         data-status=item.status
                         button-change-status
                         ) Dừng hoạt động
+                td
+                  p #{item.accountFullName}
+                  p
+                    +formatDate(item.createdBy.createdAt)
                 td 
                   a(
                     href=`${prefixAdmin}/products/detail/${item.id}`

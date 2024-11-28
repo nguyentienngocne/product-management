@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const flash = require("express-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const moment = require("moment");
 require("dotenv").config();
 const port = process.env.PORT;
 // Override Method
@@ -45,6 +46,7 @@ routeClient(app);
 // App locals Variables
 const systemConfig = require("./config/system");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
